@@ -18,7 +18,7 @@ export function TrainList({ trainData, destCode }) {
                 await Promise.all(
                     trainData.map(async (trainService) => {
                         const response = await fetch(
-                            `https://api.rtt.io/api/v1/json/service/${trainService.serviceUid}/${formattedDate}`,
+                            `https://cors-anywhere.herokuapp.com/https://api.rtt.io/api/v1/json/service/${trainService.serviceUid}/${formattedDate}`,
                             {
                                 headers: {
                                     Authorization:

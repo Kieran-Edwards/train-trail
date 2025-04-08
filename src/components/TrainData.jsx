@@ -11,7 +11,7 @@ export function TrainData({ stationCode, destCode }) {
         const fetchTrainData = async (stationCode, destCode) => {
             try {
                 const response = await fetch(
-                    `https://api.rtt.io/api/v1/json/search/${stationCode}/to/${destCode}`,
+                    `https://cors-anywhere.herokuapp.com/https://api.rtt.io/api/v1/json/search/${stationCode}/to/${destCode}`,
                     {
                         headers: {
                             Authorization:
