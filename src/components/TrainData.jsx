@@ -11,16 +11,7 @@ export function TrainData({ stationCode, destCode }) {
         const fetchTrainData = async (stationCode, destCode) => {
             try {
                 const response = await fetch(
-                    `https://cors-anywhere.herokuapp.com/https://api.rtt.io/api/v1/json/search/${stationCode}/to/${destCode}`,
-                    {
-                        headers: {
-                            Authorization:
-                            	"Basic " +
-                                btoa(
-                                    "rttapi_kdwardse:b27a41f96becf3da0c23b462650e248324eb3822"
-                                ),
-                        },
-                    }
+                    `https://rtt.07edwardsk.workers.dev/proxy/search/${stationCode}/to/${destCode}`
                 );
 
                 if (!response.ok) {

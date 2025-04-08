@@ -18,13 +18,7 @@ export function TrainList({ trainData, destCode }) {
                 await Promise.all(
                     trainData.map(async (trainService) => {
                         const response = await fetch(
-                            `https://cors-anywhere.herokuapp.com/https://api.rtt.io/api/v1/json/service/${trainService.serviceUid}/${formattedDate}`,
-                            {
-                                headers: {
-                                    Authorization:
-                                        "Basic " + btoa("rttapi_kdwardse:b27a41f96becf3da0c23b462650e248324eb3822"),
-                                },
-                            }
+                            `https://rtt.07edwardsk.workers.dev/proxy/service/${trainService.serviceUid}/${formattedDate}`
                         );
 
                         if (!response.ok) {
