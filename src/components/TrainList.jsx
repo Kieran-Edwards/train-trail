@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FormatTime } from "../utils/TimeUtils";
+import { FormatTime, GetFormattedDate } from "../utils/TimeUtils";
 
 export function TrainList({ trainData, destCode }) {
     const [serviceDetailsMap, setServiceDetailsMap] = useState({});
@@ -8,10 +8,7 @@ export function TrainList({ trainData, destCode }) {
     useEffect(() => {
         const fetchAllServiceDetails = async () => {
             try {
-                const today = new Date();
-                const formattedDate = `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, "0")}/${String(
-                    today.getDate()
-                ).padStart(2, "0")}`;
+                const formattedDate = GetFormattedDate();
 
                 const detailsMap = {};
 
@@ -83,7 +80,7 @@ export function TrainList({ trainData, destCode }) {
                                     </span>
                                 </p>
                                 <p className="text-xs">
-                                    <span>Arrives at dest: </span>
+                                    <span>Arrives at {destCode}: </span>
                                     {serviceDetails && (
                                         <span>
                                             {serviceDetails.destLocation.realtimeArrival
