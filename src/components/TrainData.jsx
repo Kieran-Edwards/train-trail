@@ -42,7 +42,7 @@ export function TrainData({ stationCode, destCode }) {
             {error && <p className="text-red-500">Error: {error}</p>}
             {trainData && (
                 <div>
-                    <h2 className="text-lg text-center text-orange-200">
+                    <h2 className="text-lg text-center text-black">
                         <span className="font-bold mr-1">{trainData.location.name}</span>
                         to
                         <span className="font-bold ml-1">{trainData.filter.destination.name}</span>
