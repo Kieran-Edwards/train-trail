@@ -3,9 +3,14 @@ import './App.css'
 
 function App() {
 
+  const now = new Date();
+  const hour = now.getHours();
+
+  const isMorning = hour < 12;
+
   return (
     <>
-      <main className="flex lg:flex-row flex-col lg:pt-16 pb-4 mt-8">
+      <main className={`flex ${isMorning ? "flex-col" : "flex-col-reverse"} lg:pt-16 pb-4 mt-8`}>
         <TrainData stationCode="CFH" destCode="FST" />
         <TrainData stationCode="FST" destCode="CFH" />
       </main>
