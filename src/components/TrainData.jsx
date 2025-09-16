@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { GetFormattedDate } from "../utils/TimeUtils"
 import { TrainList } from "./TrainList";
 
 export function TrainData({ stationCode, destCode }) {
@@ -11,22 +12,37 @@ export function TrainData({ stationCode, destCode }) {
     useEffect(() => {
         const fetchTrainData = async (stationCode, destCode) => {
             try {
-                const response = await fetch(
+
+                const dateString = GetFormattedDate(true)
+
+                const pastTrains = await fetch(
+                    `https://rtt.07edwardsk.workers.dev/proxy/search/${stationCode}/to/${destCode}${dateString}`
+                );
+
+                const futureTrains = await fetch(
                     `https://rtt.07edwardsk.workers.dev/proxy/search/${stationCode}/to/${destCode}`
                 );
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (!pastTrains.ok || !futureTrains.ok) {
+                    throw new Error(`HTTP error! res1 status: ${pastTrains.status}, res2 status: ${futureTrains.status}`);
                 }
 
-                const data = await response.json();
+                const pastTrainsData = await pastTrains.json();
+                const futureTrainsData = await futureTrains.json();
 
-                const filteredServices = data.services.filter(
+                const mergedServices = [...pastTrainsData.services, ...futureTrainsData.services];
+
+                const mergedData = { 
+                ...futureTrainsData, 
+                services: mergedServices 
+                };
+
+                const filteredServices = mergedData.services.filter(
                     (service) => service.atocCode !== "LO"
                 );
 
-                setTrainData(data);
-                setServiceData(filteredServices.slice(0, 8));
+                setTrainData(mergedData);
+                setServiceData(filteredServices.slice(0,10));
             } catch (err) {
                 setError(err.message);
             } finally {

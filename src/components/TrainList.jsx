@@ -15,7 +15,7 @@ export function TrainList({ trainData, destCode }) {
                 await Promise.all(
                     trainData.map(async (trainService) => {
                         const response = await fetch(
-                            `https://rtt.07edwardsk.workers.dev/proxy/service/${trainService.serviceUid}/${formattedDate}`
+                            `https://rtt.07edwardsk.workers.dev/proxy/service/${trainService.serviceUid}${formattedDate}`
                         );
 
                         if (!response.ok) {
