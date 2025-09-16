@@ -6,6 +6,7 @@ export function TrainData({ stationCode, destCode }) {
     const [serviceData, setServiceData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showTable, setShowTable] = useState(true)
 
     useEffect(() => {
         const fetchTrainData = async (stationCode, destCode) => {
@@ -42,12 +43,14 @@ export function TrainData({ stationCode, destCode }) {
             {error && <p className="text-red-500">Error: {error}</p>}
             {trainData && (
                 <div>
-                    <h2 className="text-lg text-center text-black">
+                    <h2 className="text-lg text-center text-black" onClick={() => setShowTable(!showTable)}>
                         <span className="font-bold mr-1">{trainData.location.name}</span>
                         to
                         <span className="font-bold ml-1">{trainData.filter.destination.name}</span>
                     </h2>
-                    <TrainList trainData={serviceData} destCode={destCode} />
+                    {showTable && (
+                        <TrainList trainData={serviceData} destCode={destCode} />
+                    )}
                 </div>
             )}
         </div>
