@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FormatTime, GetFormattedDate } from "../utils/TimeUtils";
+import { FormatTime, GetFormattedDate, ParseTimeToDate } from "../utils/TimeUtils";
 
 export function TrainList({ trainData, destCode }) {
     const [serviceDetailsMap, setServiceDetailsMap] = useState({});
@@ -54,9 +54,22 @@ export function TrainList({ trainData, destCode }) {
                 const departureTime = locationDetail.gbttBookedArrival || locationDetail.gbttBookedDeparture;
                 const timeDifference = locationDetail.realtimeDeparture - departureTime;
 
+                const departureHHMM = locationDetail.realtimeDeparture || locationDetail.gbttBookedDeparture;
+                const departureDate = ParseTimeToDate(departureHHMM);
+                const now = new Date();
+                const minutesUntilDeparture = Math.round((departureDate - now) / 60000);
+
                 return (
                     <div key={serviceUid} className="flex text-black text-left p-4 border-b border-slate-400">
-                        <p className={`mr-3 ${locationDetail.realtimeDepartureActual ? 'text-red-500' : ''}`}>{FormatTime(departureTime)}</p>
+                        <div className="d-flex align-items-center mr-3">
+                            <p className={`${locationDetail.realtimeDepartureActual ? 'text-red-500' : ''}`}>
+                                {FormatTime(departureHHMM)}
+                            </p>
+                            <p className="text-xs text-center text-gray-200">
+                                {!locationDetail.realtimeDepartureActual &&
+                                    (minutesUntilDeparture > 0 ? `${minutesUntilDeparture}m` : "Departed")}
+                            </p>
+                        </div>
 
                         <p className="mr-3">to</p>
 
@@ -72,8 +85,6 @@ export function TrainList({ trainData, destCode }) {
                                 {timeDifference !== 0 &&
                                     ` (${timeDifference > 0 ? "+" : "-"}${Math.abs(timeDifference)}min)`}
                             </p>
-
-                            {locationDetail.cancelReasonShortText}
 
                             <p className="text-xs">
                                 <span>Arrives at {destCode}: </span>
