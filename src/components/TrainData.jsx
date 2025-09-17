@@ -70,7 +70,7 @@ export function TrainData({ stationCode, destCode, isCurrent }) {
     }, [stationCode, destCode]);
 
     return (
-        <div className="bg-white p-4 rounded mb-20 mx-8">
+        <div className="bg-white p-4 rounded mb-20 mx-8 h-fit">
             {loading && <p>Loading...</p>}
             {error && <p className="text-red-500">Error: {error}</p>}
             {trainData && (
