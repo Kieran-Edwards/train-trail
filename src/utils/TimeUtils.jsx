@@ -5,6 +5,14 @@ export const FormatTime = (time) => {
     return `${hours}:${minutes}`;
 };
 
+export const ParseTimeToDate = (hhmm) => {
+    const hours = Math.floor(hhmm / 100);
+    const minutes = hhmm % 100;
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+}
+
 export const GetFormattedDate = (withTime = false) => {
   const date = new Date();
   if (withTime) date.setHours(date.getHours() - 1);
@@ -20,3 +28,4 @@ export const GetFormattedDate = (withTime = false) => {
 
   return `/${year}/${month}/${day}/${hours}${minutes}`;
 };
+
