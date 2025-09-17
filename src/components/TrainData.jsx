@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { GetFormattedDate } from "../utils/TimeUtils"
 import { TrainList } from "./TrainList";
 
-export function TrainData({ stationCode, destCode }) {
+export function TrainData({ stationCode, destCode, isCurrent }) {
     const [trainData, setTrainData] = useState(null);
     const [pastServiceData, setPastServiceData] = useState(null);
     const [showPastServices, setshowPastServices] = useState(false);
     const [serviceData, setServiceData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [showTable, setShowTable] = useState(true)
+    const [showTable, setShowTable] = useState(isCurrent)
 
     const fetchPastTrainData = async (stationCode, destCode) => {
         if (showPastServices) {
@@ -76,18 +76,20 @@ export function TrainData({ stationCode, destCode }) {
             {error && <p className="text-red-500">Error: {error}</p>}
             {trainData && (
                 <div className="flex flex-col mb-4">
-                    <h2 className="text-lg text-center text-black" onClick={() => setShowTable(!showTable)}>
+                    <h2 className="text-lg text-center text-black cursor-pointer" onClick={() => setShowTable(!showTable)}>
                         <span className="font-bold mr-1">{trainData.location.name}</span>
                         to
                         <span className="font-bold ml-1">{trainData.filter.destination.name}</span>
                     </h2>
 
-                    <button 
-                        className="bg-blue-300 p-1 m-3 rounded-md cursor-pointer"
-                        onClick={() => fetchPastTrainData(stationCode, destCode)}
-                    >
-                        {showPastServices ? 'hide' : 'load'} Past Trains
-                    </button>
+                    {showTable && (
+                        <button 
+                            className="bg-blue-300 p-1 m-3 rounded-md cursor-pointer"
+                            onClick={() => fetchPastTrainData(stationCode, destCode)}
+                        >
+                            {showPastServices ? 'hide' : 'load'} Past Trains
+                        </button>
+                    )}
 
                     {pastServiceData && showPastServices && (
                         <TrainList trainData={pastServiceData} destCode={destCode} />
