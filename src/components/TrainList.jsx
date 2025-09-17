@@ -61,7 +61,7 @@ export function TrainList({ trainData, destCode }) {
 
                 return (
                     <div key={serviceUid} className="flex text-black text-left p-4 border-b border-slate-400">
-                        <div className="d-flex align-items-center mr-3">
+                        <div className="d-flex align-items-center mr-1">
                             <p className={`${locationDetail.realtimeDepartureActual ? 'text-red-500' : ''}`}>
                                 {FormatTime(departureHHMM)}
                             </p>
@@ -71,9 +71,9 @@ export function TrainList({ trainData, destCode }) {
                             </p>
                         </div>
 
-                        <p className="mr-3">to</p>
+                        <p className="mr-1">to</p>
 
-                        <div className="flex-grow">
+                        <div className="flex-grow mr-1">
                             <p>{locationDetail.destination[0].description}</p>
 
                             <p className="text-xs">
