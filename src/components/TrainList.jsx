@@ -46,7 +46,7 @@ export function TrainList({ trainData, destCode }) {
     if (loadingServices) return <p>Loading service details...</p>;
 
     return (
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col">
             {trainData.map((trainService) => {
                 const { locationDetail, serviceUid } = trainService;
                 const serviceDetails = serviceDetailsMap[serviceUid];
@@ -61,12 +61,11 @@ export function TrainList({ trainData, destCode }) {
 
                 return (
                     <div key={serviceUid} className="flex text-black text-left p-4 border-b border-slate-400">
-
-                        <div className="d-flex align-items-center mr-1">
+                        <div className="mr-1">
                             <p className={`${locationDetail.realtimeDepartureActual ? 'text-red-500' : ''}`}>
                                 {FormatTime(departureHHMM)}
                             </p>
-                            <p className="text-xs text-center text-gray-200">
+                            <p className="text-xs text-center text-blue-300">
                                 {!locationDetail.realtimeDepartureActual &&
                                     (minutesUntilDeparture > 0 ? `${minutesUntilDeparture}m` : "Departed")}
                             </p>
