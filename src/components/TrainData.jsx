@@ -40,7 +40,6 @@ export function TrainData({ stationCode, destCode, isCurrent }) {
             setLoading(false);
         }
     }
-
     useEffect(() => {
         const fetchTrainData = async (stationCode, destCode) => {
             try {
